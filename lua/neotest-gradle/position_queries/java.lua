@@ -1,7 +1,7 @@
 local class_with_name_ending_on_test = [[
     (
       (class_declaration name: (identifier) @namespace.name)
-      (#match? @namespace.name "Test$")
+      (#match? @namespace.name "(Test|IT|ITTest|IntegrationTest)$")
     ) @namespace.definition
   ]]
 

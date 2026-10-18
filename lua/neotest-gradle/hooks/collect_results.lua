@@ -49,7 +49,7 @@ local function find_position_for_test_case(tree, test_case_node)
     class_name .. '.' .. test_name,                    -- JUnit4: com.example.Test.method
     class_name:gsub('%$', '.') .. '.' .. test_name     -- Jupiter: com.example.Test$Inner -> com.example.Test.Inner.method (nested classes)
   }
-  
+
   for _, position in tree:iter() do
     if position then
       for _, candidate_id in ipairs(candidate_ids) do
@@ -99,13 +99,13 @@ end
 --- It also tries to determine why and where a test possibly failed for
 --- additional Neotest features like diagnostics.
 ---
---- @param build_specfication table - see neotest.RunSpec
+--- @param build_specification table - see neotest.RunSpec
 --- @param tree table - see neotest.Tree
 --- @return table<string, table> - see neotest.Result
-return function(build_specfication, _, tree)
+return function(build_specification, _, tree)
   local results = {}
   local position = tree:data()
-  local results_directory = build_specfication.context.test_resuls_directory
+  local results_directory = build_specification.context.test_results_directory
   local juris_reports = parse_xml_files_from_directory(results_directory)
 
   for _, juris_report in pairs(juris_reports) do

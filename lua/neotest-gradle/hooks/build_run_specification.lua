@@ -34,14 +34,14 @@ local function get_test_results_directory(gradle_executable, project_directory)
     project_directory,
     'properties',
     '--property',
-    'testResultsDir',
+    'buildDir',
   }
   local _, output = lib.process.run(command, { stdout = true })
   local output_lines = vim.split(output.stdout or '', '\n')
 
   for _, line in pairs(output_lines) do
-    if line:match('testResultsDir: ') then
-      return line:gsub('testResultsDir: ', '') .. lib.files.sep .. 'test'
+    if line:match('buildDir') then
+      return line:gsub('^%s*buildDir:%s*', '') .. lib.files.sep .. 'test-results' .. lib.files.sep .. 'test'
     end
   end
 
@@ -100,7 +100,7 @@ end
 ---
 --- In its core, it builds a command to start Gradle correctly in the project
 --- directory with a test filter based on the positions.
---- It also determines the folder where the resulsts will be reported to, to
+--- It also determines the folder where the results will be reported to, to
 --- collect them later on. That folder path is saved to the context object.
 ---
 --- @param arguments table - see neotest.RunArgs
@@ -113,7 +113,7 @@ return function(arguments)
   vim.list_extend(command, get_test_filter_arguments(arguments.tree, position))
 
   local context = {}
-  context.test_resuls_directory = get_test_results_directory(gradle_executable, project_directory)
+  context.test_results_directory = get_test_results_directory(gradle_executable, project_directory)
 
   return { command = table.concat(command, ' '), context = context }
 end
