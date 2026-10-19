@@ -11,7 +11,7 @@ local method_with_test_marker = [[
         (modifiers (marker_annotation name: (identifier) @test_marker.identifier))
         name: (identifier) @test.name
       )
-      (#eq? @test_marker.identifier "Test")
+      (#match? @test_marker.identifier "(ParameterizedTest|Test)")
     ) @test.definition
   ]]
 
