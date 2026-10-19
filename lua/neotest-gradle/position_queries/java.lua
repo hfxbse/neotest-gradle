@@ -1,7 +1,6 @@
-local class_with_name_ending_on_test = [[
+local any_class_declaration = [[
     (
       (class_declaration name: (identifier) @namespace.name)
-      (#match? @namespace.name "(Test|IT|ITTest|IntegrationTest)$")
     ) @namespace.definition
   ]]
 
@@ -33,6 +32,6 @@ local method_with_test_marker_and_display_name_annotation = [[
   ]]
 
 -- Remind the order of the queries as first listed has higher priority.
-return class_with_name_ending_on_test
+return any_class_declaration
   .. method_with_test_marker_and_display_name_annotation
   .. method_with_test_marker
